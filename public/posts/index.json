@@ -1,0 +1,58 @@
+[
+    {
+        "slug": "reset",
+        "title": "Reset",
+        "date": "2026-03-11",
+        "description": "Blog reset — migrated from Blogger to GitHub Pages, rebuilt with Elm and Pico CSS.",
+        "tags": ["elm"]
+    },
+    {
+        "slug": "heroku-rendezvous-openssl",
+        "title": "How to connect to Heroku rendezvous url with openssl",
+        "date": "2017-06-24",
+        "description": "Execute commands on Heroku one-off dynos and consume the rendezvous URL over TCP using curl and OpenSSL.",
+        "tags": ["bash", "heroku"]
+    },
+    {
+        "slug": "ubuntu-ldap-auth-opendj",
+        "title": "Ubuntu Ldap auth with an OpenDJ server",
+        "date": "2015-09-03",
+        "description": "Integrating OpenDJ LDAP server authentication with Ubuntu workstations.",
+        "tags": ["linux", "ldap"]
+    },
+    {
+        "slug": "travis-ci-maven-deploy",
+        "title": "Travis CI & Maven deploy",
+        "date": "2014-09-15",
+        "description": "Configure Travis CI with Apache Maven for automated snapshot deployment.",
+        "tags": ["java", "ci"]
+    },
+    {
+        "slug": "websocket-grizzly-osgi-ipojo",
+        "title": "WebSocket with Grizzly, OSGi and iPOJO",
+        "date": "2012-10-12",
+        "description": "A simple component that registers a WebSocket echo application using Grizzly, OSGi and iPOJO.",
+        "tags": ["java", "websocket", "archived"]
+    },
+    {
+        "slug": "miura-fold",
+        "title": "Miura fold",
+        "date": "2012-02-25",
+        "description": "A really nice way to fold a map.",
+        "tags": ["misc"]
+    },
+    {
+        "slug": "splash11-steele-cs-square-dance",
+        "title": "Splash'11 Guy L. Steele, Jr - Computer Science & Square Dance",
+        "date": "2011-11-04",
+        "description": "Guy L. Steele Jr.'s keynote at Splash'11 connecting computer science and square dancing.",
+        "tags": ["conference"]
+    },
+    {
+        "slug": "ping",
+        "title": "Ping",
+        "date": "2010-12-02",
+        "description": "It's alive!",
+        "tags": []
+    }
+]
