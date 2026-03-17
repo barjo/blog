@@ -59,13 +59,25 @@
     radial-gradient(ellipse at 15% 50%, rgba(106, 85, 82, 0.08) 0%, transparent 50%);
 }
 
-theme-toggle {
+nav .theme-toggle {
+  display: inline-block;
+  background: none;
+  border: none;
+  margin: calc(var(--pico-nav-link-spacing-vertical) * -1) calc(var(--pico-nav-link-spacing-horizontal) * -1);
+  padding: var(--pico-nav-link-spacing-vertical) var(--pico-nav-link-spacing-horizontal);
+  border-radius: var(--pico-border-radius);
+  cursor: pointer;
+  color: var(--accent);
   transition:
     color var(--pico-transition),
     box-shadow var(--pico-transition);
 }
-theme-toggle:hover {
-  color: var(--accent);
+nav .theme-toggle:hover {
+  color: var(--accent-hover);
+}
+nav .theme-toggle:focus-visible {
+  color: var(--accent-hover);
+  box-shadow: 0 0 0 var(--pico-outline-width) var(--pico-primary-focus);
 }
 
 /* ── Base / Layout ── */

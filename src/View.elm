@@ -6,12 +6,13 @@ module View exposing (view)
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
+import Html.Events exposing (onClick)
 import Icon
 import Post exposing (Post)
 import Render
 import Route exposing (Page(..))
 import Set exposing (Set)
-import SyntaxHighlight
+import Theme exposing (Theme(..))
 
 
 type alias Model a =
@@ -19,17 +20,18 @@ type alias Model a =
         | page : Page
         , posts : List Post
         , error : Maybe String
+        , theme : Theme
     }
 
 
 {-| Render the full document for a given model.
 -}
-view : Model a -> Browser.Document msg
-view model =
+view : msg -> Model a -> Browser.Document msg
+view toggleThemeMsg model =
     { title = titleFor model
     , body =
-        [ SyntaxHighlight.useTheme SyntaxHighlight.monokai
-        , viewHeader
+        [ Theme.codeStyle model.theme
+        , viewHeader toggleThemeMsg model.theme
         , viewError model.error
         , main_ []
             [ div [ class "container" ]
@@ -44,8 +46,8 @@ view model =
 -- Layout
 
 
-viewHeader : Html msg
-viewHeader =
+viewHeader : msg -> Theme -> Html msg
+viewHeader toggleThemeMsg theme =
     header [ class "container" ]
         [ nav []
             [ ul []
@@ -67,7 +69,9 @@ viewHeader =
                         [ Icon.linkedin ]
                     ]
                 , li []
-                    [ Html.node "theme-toggle" [] [] ]
+                    [ button [ class "theme-toggle", onClick toggleThemeMsg, attribute "aria-label" "Toggle theme" ]
+                        [ Theme.icon theme ]
+                    ]
                 ]
             ]
         ]

@@ -1,4 +1,4 @@
-module Main exposing (main)
+port module Main exposing (main)
 
 {-| Blog entry point. Wires init, update and view together.
 -}
@@ -8,12 +8,24 @@ import Browser.Navigation as Nav
 import Http
 import Post exposing (Post)
 import Route exposing (Page(..))
+import Theme exposing (Theme)
 import Url
 import View
 
 
 
+-- Ports
+
+
+port saveTheme : String -> Cmd msg
+
+
+
 -- Types
+
+
+type alias Flags =
+    { theme : String }
 
 
 type alias Model =
@@ -21,6 +33,7 @@ type alias Model =
     , page : Page
     , posts : List Post
     , error : Maybe String
+    , theme : Theme
     }
 
 
@@ -29,17 +42,18 @@ type Msg
     | UrlChanged Url.Url
     | GotIndex (Result Http.Error (List Post))
     | GotPost String (Result Http.Error String)
+    | ToggleTheme
 
 
 
 -- Main
 
 
-main : Program () Model Msg
+main : Program Flags Model Msg
 main =
     Browser.application
         { init = init
-        , view = View.view
+        , view = View.view ToggleTheme
         , update = update
         , subscriptions = \_ -> Sub.none
         , onUrlRequest = LinkClicked
@@ -47,13 +61,13 @@ main =
         }
 
 
-init : () -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
-init _ url key =
+init : Flags -> Url.Url -> Nav.Key -> ( Model, Cmd Msg )
+init flags url key =
     let
         page =
             Route.urlToPage url
     in
-    ( { key = key, page = page, posts = [], error = Nothing }
+    ( { key = key, page = page, posts = [], error = Nothing, theme = Theme.fromString flags.theme }
     , Cmd.batch
         [ Post.fetchIndex GotIndex
         , case page of
@@ -104,6 +118,13 @@ update msg model =
 
         GotPost _ (Err err) ->
             ( { model | error = Just (httpErrorToString err) }, Cmd.none )
+
+        ToggleTheme ->
+            let
+                next =
+                    Theme.toggle model.theme
+            in
+            ( { model | theme = next }, saveTheme (Theme.toString next) )
 
 
 
