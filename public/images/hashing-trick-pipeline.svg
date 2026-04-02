@@ -1,0 +1,137 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 260" font-family="IBM Plex Mono, monospace" font-size="13">
+  <style>
+    .box { fill: none; stroke: #b76659; stroke-width: 1.5; rx: 6; }
+    .label { fill: #6a5552; text-anchor: middle; }
+    .small { fill: #8e8787; text-anchor: middle; font-size: 11; }
+    .arrow { stroke: #6a5552; stroke-width: 1.5; fill: none; marker-end: url(#arrowhead); }
+    .bucket { fill: #b76659; opacity: 0.8; }
+    .bucket-empty { fill: #51494e; opacity: 0.3; }
+    .accent { fill: #b76659; }
+  </style>
+  <defs>
+    <marker id="arrowhead" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+      <path d="M0,0 L8,3 L0,6" fill="#6a5552"/>
+    </marker>
+  </defs>
+
+  <!-- Step 1: Text -->
+  <rect class="box" x="10" y="30" width="130" height="50"/>
+  <text class="label" x="75" y="56">"froth on the</text>
+  <text class="label" x="75" y="72">daydream"</text>
+  <text class="small" x="75" y="16">text</text>
+
+  <!-- Arrow 1 -->
+  <path class="arrow" d="M145,55 L175,55"/>
+
+  <!-- Step 2: Tokenize -->
+  <rect class="box" x="180" y="20" width="120" height="70"/>
+  <text class="small" x="240" y="16">tokenize</text>
+  <text class="label" x="240" y="48">"froth"</text>
+  <text class="label" x="240" y="68">"daydream"</text>
+
+  <!-- Arrow 2 -->
+  <path class="arrow" d="M305,55 L335,55"/>
+
+  <!-- Step 3: Hash -->
+  <rect class="box" x="340" y="30" width="100" height="50"/>
+  <text class="small" x="390" y="16">hash</text>
+  <text class="label" x="390" y="52">h(word)</text>
+  <text class="label" x="390" y="68">mod 512</text>
+
+  <!-- Arrow 3 -->
+  <path class="arrow" d="M445,55 L475,55"/>
+
+  <!-- Step 4: Vector -->
+  <text class="small" x="590" y="16">sparse vector</text>
+
+  <!-- Buckets -->
+  <rect class="bucket-empty" x="480" y="30" width="14" height="50" rx="2"/>
+  <rect class="bucket-empty" x="498" y="30" width="14" height="50" rx="2"/>
+  <rect class="bucket" x="516" y="30" width="14" height="50" rx="2"/>
+  <rect class="bucket-empty" x="534" y="30" width="14" height="50" rx="2"/>
+  <rect class="bucket-empty" x="552" y="30" width="14" height="50" rx="2"/>
+  <rect class="bucket-empty" x="570" y="30" width="14" height="50" rx="2"/>
+  <rect class="bucket-empty" x="588" y="30" width="14" height="50" rx="2"/>
+  <rect class="bucket-empty" x="606" y="30" width="14" height="50" rx="2"/>
+  <rect class="bucket" x="624" y="30" width="14" height="50" rx="2"/>
+  <rect class="bucket-empty" x="642" y="30" width="14" height="50" rx="2"/>
+  <rect class="bucket-empty" x="660" y="30" width="14" height="50" rx="2"/>
+  <rect class="bucket-empty" x="678" y="30" width="14" height="50" rx="2"/>
+  <rect class="bucket-empty" x="696" y="30" width="14" height="50" rx="2"/>
+
+  <!-- Bucket labels -->
+  <text class="small" x="523" y="96">71</text>
+  <text class="small" x="631" y="96">318</text>
+
+  <!-- Annotations -->
+  <text class="small" x="523" y="112" font-size="10">"froth"</text>
+  <text class="small" x="631" y="112" font-size="10">"daydream"</text>
+
+  <!-- Bottom: similarity section -->
+  <text class="small" x="360" y="155">comparing two embeddings</text>
+
+  <!-- Post vector -->
+  <text class="small" x="80" y="180">post</text>
+  <rect class="bucket-empty" x="120" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket" x="138" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="156" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket" x="174" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="192" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket" x="210" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="228" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="246" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket" x="264" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="282" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="300" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket" x="318" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="336" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="354" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket" x="372" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="390" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="408" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket" x="426" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="444" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="462" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="480" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="498" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket" x="516" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="534" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="552" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="570" y="170" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="588" y="170" width="14" height="30" rx="2"/>
+
+  <!-- Query vector -->
+  <text class="small" x="80" y="225">query</text>
+  <rect class="bucket-empty" x="120" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket" x="138" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="156" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="174" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="192" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket" x="210" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="228" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="246" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="264" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="282" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="300" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="318" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="336" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="354" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="372" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="390" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="408" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="426" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="444" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="462" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="480" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="498" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="516" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="534" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="552" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="570" y="215" width="14" height="30" rx="2"/>
+  <rect class="bucket-empty" x="588" y="215" width="14" height="30" rx="2"/>
+
+  <!-- Match highlights -->
+  <rect x="136" y="168" width="18" height="80" rx="3" fill="#b76659" opacity="0.15"/>
+  <rect x="208" y="168" width="18" height="80" rx="3" fill="#b76659" opacity="0.15"/>
+
+</svg>

@@ -212,6 +212,13 @@ code.elmsh {
   color: var(--bg);
 }
 
+/* ── Search ── */
+
+.search-hint {
+  color: var(--muted);
+  text-align: center;
+}
+
 /* ── Error ── */
 
 .error {

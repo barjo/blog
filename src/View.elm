@@ -6,13 +6,20 @@ module View exposing (view)
 import Browser
 import Html exposing (..)
 import Html.Attributes exposing (..)
-import Html.Events exposing (onClick)
+import Html.Events exposing (onClick, onInput)
 import Icon
 import Post exposing (Post)
 import Render
 import Route exposing (Page(..))
+import Search
 import Set exposing (Set)
 import Theme exposing (Theme(..))
+
+
+type alias Config msg =
+    { toggleTheme : msg
+    , searchInput : String -> msg
+    }
 
 
 type alias Model a =
@@ -21,21 +28,22 @@ type alias Model a =
         , posts : List Post
         , error : Maybe String
         , theme : Theme
+        , searchQuery : String
     }
 
 
 {-| Render the full document for a given model.
 -}
-view : msg -> Model a -> Browser.Document msg
-view toggleThemeMsg model =
+view : Config msg -> Model a -> Browser.Document msg
+view config model =
     { title = titleFor model
     , body =
         [ Theme.codeStyle model.theme
-        , viewHeader toggleThemeMsg model.theme
+        , viewHeader config.toggleTheme model.theme
         , viewError model.error
         , main_ []
             [ div [ class "container" ]
-                [ viewPage model.page model.posts ]
+                [ viewPage config model ]
             ]
         , viewFooter
         ]
@@ -61,8 +69,16 @@ viewHeader toggleThemeMsg theme =
                 ]
             , ul []
                 [ li []
+                    [ a [ href "#search", attribute "aria-label" "Search" ]
+                        [ Icon.search ]
+                    ]
+                , li []
                     [ a [ href "https://github.com/barjo", target "_blank", attribute "aria-label" "GitHub" ]
                         [ Icon.github ]
+                    ]
+                , li []
+                    [ a [ href "https://bsky.app/profile/barjo.bsky.social", target "_blank", attribute "aria-label" "Bluesky" ]
+                        [ Icon.bluesky ]
                     ]
                 , li []
                     [ a [ href "https://www.linkedin.com/in/jonathanbardin", target "_blank", attribute "aria-label" "LinkedIn" ]
@@ -104,17 +120,20 @@ viewError maybeErr =
 -- Pages
 
 
-viewPage : Page -> List Post -> Html msg
-viewPage page posts =
-    case page of
+viewPage : Config msg -> Model a -> Html msg
+viewPage config model =
+    case model.page of
         Home ->
-            viewHome posts
+            viewHome model.posts
 
         TagView tag ->
-            viewTagPage posts tag
+            viewTagPage model.posts tag
 
         PostView slug content ->
-            viewPostPage posts slug content
+            viewPostPage model.posts slug content
+
+        Search ->
+            viewSearchPage config.searchInput model.searchQuery model.posts
 
         NotFound ->
             viewNotFound
@@ -164,6 +183,38 @@ viewPostPage posts slug maybeContent =
             Nothing ->
                 loading
         ]
+
+
+viewSearchPage : (String -> msg) -> String -> List Post -> Html msg
+viewSearchPage inputMsg query posts =
+    let
+        results =
+            Search.rank query posts
+    in
+    article []
+        ([ backLink
+         , h1 [] [ text "Search" ]
+         , input
+            [ type_ "search"
+            , id "search-input"
+            , placeholder "Search posts…"
+            , value query
+            , onInput inputMsg
+            , autofocus True
+            , attribute "autocomplete" "off"
+            ]
+            []
+         ]
+            ++ (if String.isEmpty (String.trim query) then
+                    [ p [ class "search-hint" ] [ text "Type to search…" ] ]
+
+                else if List.isEmpty results then
+                    [ p [ class "search-hint" ] [ text "No results found." ] ]
+
+                else
+                    List.map (\( post, _ ) -> viewPostCard post) results
+               )
+        )
 
 
 viewNotFound : Html msg
@@ -281,6 +332,9 @@ titleFor model =
                 |> Maybe.map .title
                 |> Maybe.withDefault slug
                 |> (\t -> t ++ " — Confession of a Barjo")
+
+        Search ->
+            "Search — Confession of a Barjo"
 
         NotFound ->
             "Not Found — Confession of a Barjo"

@@ -12,6 +12,7 @@ type Page
     = Home
     | TagView String
     | PostView String (Maybe String)
+    | Search
     | NotFound
 
 
@@ -33,6 +34,9 @@ urlToPage url =
 
                 [ "tag", tag ] ->
                     TagView tag
+
+                [ "search" ] ->
+                    Search
 
                 _ ->
                     NotFound

@@ -1,4 +1,4 @@
-.PHONY: help build watch format clean post
+.PHONY: help build watch format clean post embed
 .DEFAULT_GOAL := help
 
 ELM        = npx elm
@@ -20,7 +20,12 @@ help: ## help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
 		| awk 'BEGIN {FS = ":.*?## "}; {printf "  \033[36m%-10s\033[0m %s\n", $$1, $$2}'
 
-build: clean ## compile, minify and output to build/
+embed: ## generate post embeddings
+	@$(ELM) make $(SRC)/Embed.elm --output=scripts/embed-worker.js
+	@node scripts/embed.js
+	@rm -f scripts/embed-worker.js
+
+build: clean embed ## compile, minify and output to build/
 	@cp -r $(PUBLIC) $(BUILD)
 	@$(ELM) make $(SRC)/Main.elm --optimize --output=$(BUILD)/elm.tmp.js
 	@$(UGLIFY) $(BUILD)/elm.tmp.js --compress "$(UGLIFY_COMPRESS)" --mangle --output $(BUILD)/elm.js

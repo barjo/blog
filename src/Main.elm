@@ -4,10 +4,14 @@ port module Main exposing (main)
 -}
 
 import Browser
+import Browser.Dom
+import Browser.Events
 import Browser.Navigation as Nav
 import Http
+import Json.Decode as Decode
 import Post exposing (Post)
 import Route exposing (Page(..))
+import Task
 import Theme exposing (Theme)
 import Url
 import View
@@ -34,6 +38,7 @@ type alias Model =
     , posts : List Post
     , error : Maybe String
     , theme : Theme
+    , searchQuery : String
     }
 
 
@@ -43,6 +48,10 @@ type Msg
     | GotIndex (Result Http.Error (List Post))
     | GotPost String (Result Http.Error String)
     | ToggleTheme
+    | OpenSearch
+    | GoHome
+    | SearchInput String
+    | NoOp
 
 
 
@@ -53,9 +62,13 @@ main : Program Flags Model Msg
 main =
     Browser.application
         { init = init
-        , view = View.view ToggleTheme
+        , view =
+            View.view
+                { toggleTheme = ToggleTheme
+                , searchInput = SearchInput
+                }
         , update = update
-        , subscriptions = \_ -> Sub.none
+        , subscriptions = subscriptions
         , onUrlRequest = LinkClicked
         , onUrlChange = UrlChanged
         }
@@ -67,7 +80,13 @@ init flags url key =
         page =
             Route.urlToPage url
     in
-    ( { key = key, page = page, posts = [], error = Nothing, theme = Theme.fromString flags.theme }
+    ( { key = key
+      , page = page
+      , posts = []
+      , error = Nothing
+      , theme = Theme.fromString flags.theme
+      , searchQuery = ""
+      }
     , Cmd.batch
         [ Post.fetchIndex GotIndex
         , case page of
@@ -78,6 +97,33 @@ init flags url key =
                 Cmd.none
         ]
     )
+
+
+
+-- Subscriptions
+
+
+subscriptions : Model -> Sub Msg
+subscriptions _ =
+    Browser.Events.onKeyDown
+        (Decode.map2 Tuple.pair
+            (Decode.field "key" Decode.string)
+            (Decode.map2 (||)
+                (Decode.field "ctrlKey" Decode.bool)
+                (Decode.field "metaKey" Decode.bool)
+            )
+            |> Decode.andThen
+                (\( key, mod ) ->
+                    if mod && key == "k" then
+                        Decode.succeed OpenSearch
+
+                    else if key == "Escape" then
+                        Decode.succeed GoHome
+
+                    else
+                        Decode.fail ""
+                )
+        )
 
 
 
@@ -98,10 +144,13 @@ update msg model =
                 page =
                     Route.urlToPage url
             in
-            ( { model | page = page, error = Nothing }
+            ( { model | page = page, error = Nothing, searchQuery = "" }
             , case page of
                 PostView slug _ ->
                     Post.fetchPost slug (GotPost slug)
+
+                Search ->
+                    Task.attempt (\_ -> NoOp) (Browser.Dom.focus "search-input")
 
                 _ ->
                     Cmd.none
@@ -116,8 +165,8 @@ update msg model =
         GotPost slug (Ok content) ->
             ( { model | page = PostView slug (Just content), error = Nothing }, Cmd.none )
 
-        GotPost _ (Err err) ->
-            ( { model | error = Just (httpErrorToString err) }, Cmd.none )
+        GotPost _ (Err _) ->
+            ( { model | page = NotFound }, Cmd.none )
 
         ToggleTheme ->
             let
@@ -125,6 +174,18 @@ update msg model =
                     Theme.toggle model.theme
             in
             ( { model | theme = next }, saveTheme (Theme.toString next) )
+
+        OpenSearch ->
+            ( model, Nav.pushUrl model.key "#search" )
+
+        GoHome ->
+            ( model, Nav.pushUrl model.key "#" )
+
+        SearchInput query ->
+            ( { model | searchQuery = query }, Cmd.none )
+
+        NoOp ->
+            ( model, Cmd.none )
 
 
 

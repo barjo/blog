@@ -15,6 +15,7 @@ type alias Post =
     , date : String
     , description : String
     , tags : List String
+    , embedding : List ( Int, Float )
     }
 
 
@@ -26,12 +27,29 @@ type alias Post =
 -}
 decoder : Decode.Decoder Post
 decoder =
-    Decode.map5 Post
+    Decode.map6 Post
         (Decode.field "slug" Decode.string)
         (Decode.field "title" Decode.string)
         (Decode.field "date" Decode.string)
         (Decode.field "description" Decode.string)
         (Decode.field "tags" (Decode.list Decode.string))
+        (Decode.oneOf
+            [ Decode.field "embedding" (Decode.list Decode.float |> Decode.map pairsFromFlat)
+            , Decode.succeed []
+            ]
+        )
+
+
+{-| Decode flat [idx, val, idx, val, …] into pairs.
+-}
+pairsFromFlat : List Float -> List ( Int, Float )
+pairsFromFlat flat =
+    case flat of
+        i :: v :: rest ->
+            ( round i, v ) :: pairsFromFlat rest
+
+        _ ->
+            []
 
 
 

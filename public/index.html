@@ -40,6 +40,11 @@
         document.documentElement.dataset.theme = theme;
         localStorage.setItem("theme", theme);
       });
+
+      // Prevent browser default for Ctrl/Cmd+K — Elm handles the rest.
+      document.addEventListener("keydown", function (e) {
+        if ((e.ctrlKey || e.metaKey) && e.key === "k") e.preventDefault();
+      });
     </script>
   </body>
 </html>

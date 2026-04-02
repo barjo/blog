@@ -1,4 +1,4 @@
-module Icon exposing (github, linkedin, moon, sun)
+module Icon exposing (bluesky, github, linkedin, moon, search, sun)
 
 {-| Minimalist SVG icons.
 -}
@@ -6,6 +6,15 @@ module Icon exposing (github, linkedin, moon, sun)
 import Html exposing (Html)
 import Svg exposing (..)
 import Svg.Attributes exposing (..)
+
+
+{-| Bluesky butterfly icon.
+-}
+bluesky : Html msg
+bluesky =
+    svg [ viewBox "0 0 24 24", width "20", height "20", fill "currentColor" ]
+        [ Svg.path [ d "M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.785 2.627 3.6 3.476 6.158 3.13-4.295.59-7.532 2.478-4.25 7.006C5.845 24.26 11.382 21.207 12 17.08c.618 4.127 6.155 7.18 9.468 3.303 3.282-4.528.045-6.417-4.25-7.007 2.558.347 5.373-.502 6.158-3.129.246-.828.624-5.79.624-6.479 0-.689-.139-1.861-.902-2.203-.659-.3-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8" ] []
+        ]
 
 
 {-| GitHub octocat icon.
@@ -32,6 +41,16 @@ moon : Html msg
 moon =
     svg [ viewBox "0 0 24 24", width "20", height "20", fill "none", stroke "currentColor", strokeWidth "2", strokeLinecap "round", strokeLinejoin "round" ]
         [ Svg.path [ d "M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" ] [] ]
+
+
+{-| Search / magnifying glass icon.
+-}
+search : Html msg
+search =
+    svg [ viewBox "0 0 24 24", width "20", height "20", fill "none", stroke "currentColor", strokeWidth "2", strokeLinecap "round", strokeLinejoin "round" ]
+        [ Svg.circle [ cx "11", cy "11", r "8" ] []
+        , Svg.path [ d "M21 21l-4.35-4.35" ] []
+        ]
 
 
 {-| Sun icon (light mode).
