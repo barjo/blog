@@ -62,7 +62,7 @@ viewHeader toggleThemeMsg theme =
                 [ li []
                     [ a [ href "#", class "site-title" ]
                         [ span [ class "title-prefix" ] [ text "Confession" ]
-                        , span [ class "title-of" ] [ text " of a " ]
+                        , span [ class "title-of" ] [ text " of a\u{00A0}" ]
                         , span [ class "title-name" ] [ text "Barjo" ]
                         ]
                     ]
@@ -240,7 +240,7 @@ viewFeaturedPost post =
         , p [ class "featured-desc" ] [ text post.description ]
         , div [ class "featured-footer" ]
             [ viewTags post.tags
-            , a [ href ("#post/" ++ post.slug), class "nav-link" ] [ text "Read more →" ]
+            , a [ href ("#post/" ++ post.slug), class "nav-link" ] [ text "Continue reading →" ]
             ]
         ]
 

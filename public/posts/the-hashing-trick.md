@@ -2,7 +2,7 @@ You probably have heard about embeddings, especially in the context of neural ne
 
 ## What's an embedding anyway?
 
-An embedding is just a list of numbers (vector) that represents something. A blog post, a sentence, a word — anything. For example, the word "daydream" might be represented as `[0, 0, 0.7, 0, 0, 0.3, 0, 0]`. Mostly zeros, with weight in a couple of positions. The word "dream" might land weight in some of the same positions, making their vectors similar. The word "froth" would light up completely different ones.
+An embedding is just a list of numbers (vector) that represents something. A blog post, a sentence, a word, anything. For example, the word "daydream" might be represented as `[0, 0, 0.7, 0, 0, 0.3, 0, 0]`. Mostly zeros, with weight in a couple of positions. The word "dream" might land weight in some of the same positions, making their vectors similar. The word "froth" would light up completely different ones.
 
 The key idea is that *similar things should be mapped to similar numbers*. In the context of this blog, if two posts are about the same topic, their embeddings should point in roughly the same direction.
 
