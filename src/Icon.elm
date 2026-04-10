@@ -1,4 +1,4 @@
-module Icon exposing (bluesky, github, linkedin, moon, search, sun)
+module Icon exposing (bluesky, github, linkedin, moon, search, smiley, sun)
 
 {-| Minimalist SVG icons.
 -}
@@ -41,6 +41,23 @@ moon : Html msg
 moon =
     svg [ viewBox "0 0 24 24", width "20", height "20", fill "none", stroke "currentColor", strokeWidth "2", strokeLinecap "round", strokeLinejoin "round" ]
         [ Svg.path [ d "M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z" ] [] ]
+
+
+{-| Ed's smiley icon (radical theme).
+-}
+smiley : Html msg
+smiley =
+    svg [ viewBox "0 0 24 24", width "20", height "20" ]
+        [ g [ transform "rotate(-8 12 12)" ]
+            [ Svg.circle [ cx "12", cy "12", r "11", fill "#f2c802", opacity "0.6", stroke "#161513", strokeWidth "1.5" ] []
+            , Svg.path [ d "M7 9.5c0.8-1.2 2.2-1.2 3 0", stroke "#161513", strokeWidth "1.5", fill "none", strokeLinecap "round" ] []
+            , Svg.path [ d "M14 9.5c0.8-1.2 2.2-1.2 3 0", stroke "#161513", strokeWidth "1.5", fill "none", strokeLinecap "round" ] []
+            , Svg.ellipse [ cx "5.5", cy "12", Svg.Attributes.rx "2.5", Svg.Attributes.ry "1.5", fill "#d5032a", opacity "0.4" ] []
+            , Svg.ellipse [ cx "18.5", cy "12", Svg.Attributes.rx "2.5", Svg.Attributes.ry "1.5", fill "#d5032a", opacity "0.4" ] []
+            , Svg.path [ d "M3.5 15c1.5 8 15.5 8 17 0c-1.5-2.2-15.5-2.2-17 0z", fill "#fafafa", stroke "#161513", strokeWidth "1.2" ] []
+            , Svg.path [ d "M7.5 13.7v5.5M12 13.5v6.5M16.5 13.7v5.5", stroke "#161513", strokeWidth "0.7" ] []
+            ]
+        ]
 
 
 {-| Search / magnifying glass icon.

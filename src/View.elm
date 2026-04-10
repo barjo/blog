@@ -159,7 +159,7 @@ viewTagPage posts tag =
         filtered =
             List.filter (\p -> List.member tag p.tags) posts
     in
-    article []
+    article [ class "page" ]
         ([ backLink
          , h1 [] [ text ("#" ++ tag) ]
          ]
@@ -174,7 +174,7 @@ viewTagPage posts tag =
 
 viewPostPage : List Post -> String -> Maybe String -> Html msg
 viewPostPage posts slug maybeContent =
-    article []
+    article [ class "page" ]
         [ Post.findBySlug slug posts |> viewMaybe viewPostHeader
         , case maybeContent of
             Just content ->
@@ -191,7 +191,7 @@ viewSearchPage inputMsg query posts =
         results =
             Search.rank query posts
     in
-    article []
+    article [ class "page" ]
         ([ backLink
          , h1 [] [ text "Search" ]
          , input
@@ -219,7 +219,7 @@ viewSearchPage inputMsg query posts =
 
 viewNotFound : Html msg
 viewNotFound =
-    article []
+    article [ class "page" ]
         [ h1 [] [ text "404" ]
         , p [] [ text "Page not found." ]
         , backLink

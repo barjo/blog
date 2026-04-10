@@ -54,6 +54,142 @@
   --pico-secondary-hover: var(--fg);
   --pico-code-background-color: var(--bg-surface);
   --pico-code-color: var(--accent-hover);
+  --pico-h1-color: var(--fg);
+  --pico-h2-color: var(--fg);
+  --pico-h3-color: var(--muted);
+  --pico-h4-color: var(--muted);
+  --pico-h5-color: var(--muted);
+  --pico-h6-color: var(--muted);
+  --pico-form-element-background-color: var(--bg-surface);
+  --pico-form-element-border-color: var(--surface);
+  --pico-form-element-color: var(--fg);
+  --pico-form-element-active-background-color: var(--bg-surface);
+  --pico-form-element-active-border-color: var(--accent);
+}
+
+/* ── Theme: Radical Edward — hidden ── */
+
+:root[data-theme="radical"] {
+  --bg: #0a0a1a;
+  --bg-surface: #12122a;
+  --fg: #e8dcc0;
+  --muted: #8878a8;
+  --accent: #ff6b35;
+  --accent-hover: #ff9a6c;
+  --subtle: #5a4a7e;
+  --surface: #1e1e3a;
+  --pico-font-family: "IBM Plex Mono", monospace;
+  --pico-background-color: var(--bg);
+  --pico-card-background-color: var(--bg-surface);
+  --pico-card-sectioning-background-color: var(--bg-surface);
+  --pico-card-box-shadow: none;
+  --pico-color: var(--fg);
+  --pico-muted-color: var(--muted);
+  --pico-primary: var(--accent);
+  --pico-primary-hover: var(--accent-hover);
+  --pico-secondary: var(--muted);
+  --pico-secondary-hover: var(--fg);
+  --pico-code-background-color: var(--bg-surface);
+  --pico-code-color: #6be86b;
+  --pico-h1-color: var(--fg);
+  --pico-h2-color: var(--fg);
+  --pico-h3-color: #c8bca8;
+  --pico-h4-color: #c8bca8;
+  --pico-h5-color: #c8bca8;
+  --pico-h6-color: #c8bca8;
+  --pico-form-element-background-color: var(--bg-surface);
+  --pico-form-element-border-color: var(--surface);
+  --pico-form-element-color: var(--fg);
+  --pico-form-element-active-background-color: var(--bg-surface);
+  --pico-form-element-active-border-color: var(--accent);
+}
+
+[data-theme="radical"] .container {
+  max-width: 50rem;
+}
+
+[data-theme="radical"] body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 85% 10%, rgba(255, 107, 53, 0.14) 0%, transparent 50%),
+    radial-gradient(ellipse at 10% 80%, rgba(90, 74, 126, 0.16) 0%, transparent 50%),
+    radial-gradient(ellipse at 50% 50%, transparent 60%, rgba(0, 0, 0, 0.4) 100%);
+  pointer-events: none;
+  z-index: 1;
+}
+
+[data-theme="radical"] body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(
+    0deg,
+    transparent 0%,
+    rgba(140, 120, 200, 0.008) 48%,
+    rgba(140, 120, 200, 0.015) 50%,
+    rgba(140, 120, 200, 0.008) 52%,
+    transparent 100%
+  );
+  background-size: 100% 12rem;
+  animation: crt-sweep 14s linear infinite;
+  pointer-events: none;
+  z-index: 10;
+}
+
+@keyframes crt-sweep {
+  0% {
+    background-position: 0 -8rem;
+  }
+  100% {
+    background-position: 0 100vh;
+  }
+}
+
+[data-theme="radical"] article header h1 {
+  text-shadow: 0 0 8px rgba(255, 107, 53, 0.3);
+}
+
+[data-theme="radical"] .site-title {
+  animation: glitch 17s infinite;
+}
+
+@keyframes glitch {
+  0%,
+  100% {
+    text-shadow: none;
+  }
+  22%,
+  23% {
+    text-shadow: none;
+  }
+  22.2%,
+  22.8% {
+    text-shadow:
+      -1px 0 rgba(255, 107, 53, 0.55),
+      1px 0 rgba(90, 74, 126, 0.55);
+  }
+  53%,
+  54% {
+    text-shadow: none;
+  }
+  53.3%,
+  53.9% {
+    text-shadow:
+      1px 0 rgba(255, 107, 53, 0.55),
+      -1px 0 rgba(90, 74, 126, 0.55);
+  }
+  81%,
+  82% {
+    text-shadow: none;
+  }
+  81.2%,
+  81.8% {
+    text-shadow:
+      -1px 0 rgba(255, 107, 53, 0.55),
+      1px 0 rgba(90, 74, 126, 0.55);
+  }
 }
 
 /* ── Base / Layout ── */
@@ -163,6 +299,16 @@ nav .theme-toggle:focus {
 }
 
 /* ── Article ── */
+
+.page {
+  background: none;
+  box-shadow: none;
+  padding: 0;
+}
+.page > header {
+  background: none;
+  border: none;
+}
 
 article header h1 {
   color: var(--accent);

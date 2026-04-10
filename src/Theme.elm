@@ -11,15 +11,20 @@ import SyntaxHighlight
 type Theme
     = Dark
     | Light
+    | Radical
 
 
 fromString : String -> Theme
 fromString s =
-    if s == "dark" then
-        Dark
+    case s of
+        "dark" ->
+            Dark
 
-    else
-        Light
+        "radical" ->
+            Radical
+
+        _ ->
+            Light
 
 
 toString : Theme -> String
@@ -31,6 +36,9 @@ toString theme =
         Light ->
             "light"
 
+        Radical ->
+            "radical"
+
 
 toggle : Theme -> Theme
 toggle theme =
@@ -40,6 +48,9 @@ toggle theme =
 
         Light ->
             Dark
+
+        Radical ->
+            Light
 
 
 icon : Theme -> Html msg
@@ -51,6 +62,9 @@ icon theme =
         Light ->
             Icon.sun
 
+        Radical ->
+            Icon.smiley
+
 
 codeStyle : Theme -> Html msg
 codeStyle theme =
@@ -60,3 +74,6 @@ codeStyle theme =
 
         Light ->
             SyntaxHighlight.useTheme SyntaxHighlight.gitHub
+
+        Radical ->
+            SyntaxHighlight.useTheme SyntaxHighlight.monokai

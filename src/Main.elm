@@ -39,6 +39,7 @@ type alias Model =
     , error : Maybe String
     , theme : Theme
     , searchQuery : String
+    , easterEdProgress : Int
     }
 
 
@@ -51,6 +52,7 @@ type Msg
     | OpenSearch
     | GoHome
     | SearchInput String
+    | KeyDown String
     | NoOp
 
 
@@ -86,6 +88,7 @@ init flags url key =
       , error = Nothing
       , theme = Theme.fromString flags.theme
       , searchQuery = ""
+      , easterEdProgress = 0
       }
     , Cmd.batch
         [ Post.fetchIndex GotIndex
@@ -106,19 +109,21 @@ init flags url key =
 subscriptions : Model -> Sub Msg
 subscriptions _ =
     Browser.Events.onKeyDown
-        (Decode.map2 Tuple.pair
+        (Decode.map4 (\key ctrl meta tag -> ( key, ctrl || meta, tag ))
             (Decode.field "key" Decode.string)
-            (Decode.map2 (||)
-                (Decode.field "ctrlKey" Decode.bool)
-                (Decode.field "metaKey" Decode.bool)
-            )
+            (Decode.field "ctrlKey" Decode.bool)
+            (Decode.field "metaKey" Decode.bool)
+            (Decode.at [ "target", "tagName" ] Decode.string)
             |> Decode.andThen
-                (\( key, mod ) ->
+                (\( key, mod, tag ) ->
                     if mod && key == "k" then
                         Decode.succeed OpenSearch
 
                     else if key == "Escape" then
                         Decode.succeed GoHome
+
+                    else if tag /= "INPUT" && (key == "e" || key == "d") then
+                        Decode.succeed (KeyDown key)
 
                     else
                         Decode.fail ""
@@ -183,6 +188,18 @@ update msg model =
 
         SearchInput query ->
             ( { model | searchQuery = query }, Cmd.none )
+
+        KeyDown key ->
+            if key == "e" then
+                ( { model | easterEdProgress = 1 }, Cmd.none )
+
+            else if key == "d" && model.easterEdProgress == 1 then
+                ( { model | theme = Theme.Radical, easterEdProgress = 0 }
+                , saveTheme (Theme.toString Theme.Radical)
+                )
+
+            else
+                ( { model | easterEdProgress = 0 }, Cmd.none )
 
         NoOp ->
             ( model, Cmd.none )
