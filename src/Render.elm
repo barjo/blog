@@ -69,6 +69,12 @@ codeBlock { body, language } =
                 Just "python" ->
                     SyntaxHighlight.python
 
+                Just "go" ->
+                    SyntaxHighlight.go
+
+                Just "zig" ->
+                    SyntaxHighlight.go
+
                 Just "sql" ->
                     SyntaxHighlight.sql
 
