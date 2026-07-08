@@ -2,4 +2,5 @@ elm-stuff/
 node_modules/
 build/
 public/elm.js
+public/feed.xml
 repl-temp-*

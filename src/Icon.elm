@@ -1,4 +1,4 @@
-module Icon exposing (bluesky, github, linkedin, moon, search, smiley, sun)
+module Icon exposing (bluesky, github, linkedin, moon, rss, search, smiley, sun)
 
 {-| Minimalist SVG icons.
 -}
@@ -57,6 +57,15 @@ smiley =
             , Svg.path [ d "M3.5 15c1.5 8 15.5 8 17 0c-1.5-2.2-15.5-2.2-17 0z", fill "#fafafa", stroke "#161513", strokeWidth "1.2" ] []
             , Svg.path [ d "M7.5 13.7v5.5M12 13.5v6.5M16.5 13.7v5.5", stroke "#161513", strokeWidth "0.7" ] []
             ]
+        ]
+
+
+{-| RSS feed icon.
+-}
+rss : Html msg
+rss =
+    svg [ viewBox "0 0 24 24", width "20", height "20", fill "currentColor" ]
+        [ Svg.path [ d "M3.429 5.1v2.4c7.248 0 13.114 5.866 13.114 13.114h2.4C18.943 12.219 12.81 5.1 3.429 5.1zm0 4.8v2.4c4.586 0 8.314 3.728 8.314 8.314h2.4c0-5.92-4.794-10.714-10.714-10.714zm1.8 7.157a1.557 1.557 0 100 3.114 1.557 1.557 0 000-3.114z" ] []
         ]
 
 

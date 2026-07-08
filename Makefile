@@ -1,4 +1,4 @@
-.PHONY: help build watch format clean post embed
+.PHONY: help build watch format clean post embed feed
 .DEFAULT_GOAL := help
 
 ELM        = npx elm
@@ -25,7 +25,11 @@ embed: ## generate post embeddings
 	@node scripts/embed.js
 	@rm -f scripts/embed-worker.js
 
-build: clean embed ## compile, minify and output to build/
+feed: ## generate rss feed
+	@jq -r -f scripts/feed.jq $(POSTS)/index.json > $(PUBLIC)/feed.xml
+	@xmllint --noout $(PUBLIC)/feed.xml
+
+build: clean embed feed ## compile, minify and output to build/
 	@cp -r $(PUBLIC) $(BUILD)
 	@$(ELM) make $(SRC)/Main.elm --optimize --output=$(BUILD)/elm.tmp.js
 	@$(UGLIFY) $(BUILD)/elm.tmp.js --compress "$(UGLIFY_COMPRESS)" --mangle --output $(BUILD)/elm.js
@@ -42,7 +46,7 @@ format: ## format elm, css and html
 
 clean: ## remove build artifacts
 	@rm -rf $(BUILD)
-	@rm -f $(PUBLIC)/elm.js
+	@rm -f $(PUBLIC)/elm.js $(PUBLIC)/feed.xml
 
 post: ## create a new post
 	@read -p "Title: " title; \
