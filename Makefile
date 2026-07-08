@@ -27,7 +27,7 @@ embed: ## generate post embeddings
 
 feed: ## generate rss feed
 	@jq -r -f scripts/feed.jq $(POSTS)/index.json > $(PUBLIC)/feed.xml
-	@xmllint --noout $(PUBLIC)/feed.xml
+	@python3 -c "import sys, xml.etree.ElementTree as ET; ET.parse(sys.argv[1])" $(PUBLIC)/feed.xml
 
 build: clean embed feed ## compile, minify and output to build/
 	@cp -r $(PUBLIC) $(BUILD)
