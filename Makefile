@@ -5,7 +5,7 @@ ELM        = npx elm
 ELM_WATCH  = npx elm-watch
 SERVE      = npx servor --browse
 ELM_FORMAT = npx elm-format
-UGLIFY     = npx uglifyjs
+TERSER     = npx terser
 CLEANCSS   = npx cleancss
 PRETTIER   = npx prettier
 
@@ -14,7 +14,7 @@ PUBLIC = public
 POSTS  = $(PUBLIC)/posts
 SRC    = src
 
-UGLIFY_COMPRESS = pure_funcs=[F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9],pure_getters,passes=2
+TERSER_COMPRESS = pure_funcs=[F2,F3,F4,F5,F6,F7,F8,F9,A2,A3,A4,A5,A6,A7,A8,A9],pure_getters,passes=2
 
 help: ## help
 	@grep -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) \
@@ -32,7 +32,7 @@ feed: ## generate rss feed
 build: clean embed feed ## compile, minify and output to build/
 	@cp -r $(PUBLIC) $(BUILD)
 	@$(ELM) make $(SRC)/Main.elm --optimize --output=$(BUILD)/elm.tmp.js
-	@$(UGLIFY) $(BUILD)/elm.tmp.js --compress "$(UGLIFY_COMPRESS)" --mangle --output $(BUILD)/elm.js
+	@$(TERSER) $(BUILD)/elm.tmp.js --compress "$(TERSER_COMPRESS)" --mangle --output $(BUILD)/elm.js
 	@rm $(BUILD)/elm.tmp.js
 	@$(CLEANCSS) -o $(BUILD)/style.css $(PUBLIC)/style.css
 	@du -sh $(BUILD)/elm.js $(BUILD)/style.css
